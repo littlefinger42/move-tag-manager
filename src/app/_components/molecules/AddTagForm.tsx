@@ -3,7 +3,7 @@
 import { FC, useState } from "react";
 import styled from "styled-components";
 
-import { Button } from "@/app/_components/Button";
+import { Button } from "@/app/_components/atoms/Button";
 import { useTagContext } from "@/app/_context/tagsContext";
 
 const PositionedButton = styled(Button)`

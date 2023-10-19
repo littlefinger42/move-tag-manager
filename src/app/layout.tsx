@@ -1,6 +1,7 @@
 import { ReactNode } from "react";
 import { Inter } from "next/font/google";
 
+import "@/app/globals.css";
 import { Providers } from "@/app/providers";
 import StyledComponentsRegistry from "@/app/_lib/registry";
 import { Template } from "@/app/_templates/Template";

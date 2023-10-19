@@ -1,12 +1,32 @@
 "use client";
 
 import { FC } from "react";
+import styled from "styled-components";
 
 import { useTagContext } from "@/app/_context/tagsContext";
+import { Tag } from "@/app/_components/Tag";
+
+const UnorderedList = styled.ul`
+  list-style-type: none;
+  padding: 0;
+
+  li {
+    display: inline-block;
+    margin-right: 1rem;
+    margin-bottom: 0.5rem;
+  }
+`;
 
 export const TagsList: FC = () => {
   const { tags } = useTagContext();
 
-  console.log("TAGS", tags);
-  return <div>tags list</div>;
+  return (
+    <UnorderedList>
+      {tags.map((tag) => (
+        <li key={tag.id}>
+          <Tag>{tag.title}</Tag>
+        </li>
+      ))}
+    </UnorderedList>
+  );
 };

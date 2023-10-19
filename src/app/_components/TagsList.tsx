@@ -22,9 +22,9 @@ export const TagsList: FC = () => {
 
   return (
     <UnorderedList>
-      {tags.map((tag) => (
-        <li key={tag.id}>
-          <Tag>{tag.title}</Tag>
+      {tags.map(({ id, title, synced }) => (
+        <li key={id}>
+          <Tag synced={!!synced}>{title}</Tag>
         </li>
       ))}
     </UnorderedList>

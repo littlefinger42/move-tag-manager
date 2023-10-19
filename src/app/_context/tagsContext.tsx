@@ -27,6 +27,7 @@ const generateTag = (title: string) => ({
   createdAt: new Date().toISOString(),
   createdBy: "TODO",
   id: uuidv4(),
+  synced: false,
 });
 
 export const TagContextProvider: FC<PropsWithChildren> = ({ children }) => {
@@ -44,7 +45,7 @@ export const TagContextProvider: FC<PropsWithChildren> = ({ children }) => {
         );
         if (response.ok) {
           const tags = await response.json();
-          setTags(tags);
+          setTags(tags.map((tag: Tag) => ({ ...tag, synced: true })));
         } else {
           throw Error(`An error has occured: ${response.status}`);
         }

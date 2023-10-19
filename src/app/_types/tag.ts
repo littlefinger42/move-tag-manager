@@ -3,4 +3,5 @@ export interface Tag {
   title: string;
   createdAt: string;
   createdBy: string;
+  synced?: boolean;
 }

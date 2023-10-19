@@ -42,7 +42,7 @@ export const AddTagForm: FC = () => {
         />
       </FieldSet>
 
-      <Button onClick={handleSyncTags}>Sync Tags</Button>
+      <PositionedButton onClick={handleSyncTags}>Sync Tags</PositionedButton>
       {statusMessage}
     </>
   );

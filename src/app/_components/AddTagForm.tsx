@@ -4,6 +4,7 @@ import { FC, useState } from "react";
 import styled from "styled-components";
 
 import { Button } from "@/app/_components/Button";
+import { useTagContext } from "@/app/_context/tagsContext";
 
 const PositionedButton = styled(Button)`
   margin-right: 1rem;
@@ -11,10 +12,13 @@ const PositionedButton = styled(Button)`
 
 export const AddTagForm: FC = () => {
   const [tagInput, setTagInput] = useState<string>("");
+  const { addTag } = useTagContext();
 
   return (
     <>
-      <PositionedButton>Add tag</PositionedButton>
+      <PositionedButton onClick={() => addTag(tagInput)}>
+        Add tag
+      </PositionedButton>
       <input
         type="text"
         onChange={(e) => setTagInput(e.target.value)}

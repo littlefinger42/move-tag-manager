@@ -8,14 +8,26 @@ import React, {
   useEffect,
   createContext,
 } from "react";
+import { v4 as uuidv4 } from "uuid";
 
 import { Tag } from "@/app/_types/tag";
 
 type TagsContextType = {
   tags: Tag[];
+  addTag: (title: string) => void;
 };
 
-const tagContext = createContext<TagsContextType>({ tags: [] });
+const tagContext = createContext<TagsContextType>({
+  tags: [],
+  addTag: () => {},
+});
+
+const generateTag = (title: string) => ({
+  title,
+  createdAt: new Date().toISOString(),
+  createdBy: "TODO",
+  id: uuidv4(),
+});
 
 export const TagContextProvider: FC<PropsWithChildren> = ({ children }) => {
   const [tags, setTags] = useState<Tag[]>([]);
@@ -43,10 +55,20 @@ export const TagContextProvider: FC<PropsWithChildren> = ({ children }) => {
     fetchData();
   }, []);
 
+  const addTag = (title: string) => {
+    // Check if tag with same name exists
+    if (tags.find((tag) => tag.title === title)) {
+      // TODO: Handle duplicate tag error
+    } else {
+      setTags((oldTags) => [...oldTags, generateTag(title)]);
+    }
+  };
+
   return (
     <tagContext.Provider
       value={{
         tags,
+        addTag,
       }}
     >
       {children}

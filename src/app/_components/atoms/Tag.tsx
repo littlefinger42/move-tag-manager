@@ -23,7 +23,7 @@ const StyledTag = styled.button<{ $synced: boolean }>`
       display: flex;
       align-items: center;
       justify-content: center;
-      background-color: red;
+      background-color: var(--color-light-red);
       border-radius: 0.25rem;
     }
   }
@@ -36,7 +36,7 @@ interface TagProps extends PropsWithChildren {
 
 export const Tag: FC<TagProps> = ({ children, synced, onClick }) => {
   return (
-    <StyledTag $synced={synced} onClick={onClick}>
+    <StyledTag $synced={synced} onClick={onClick} aria-label="Delete tag">
       {children}
     </StyledTag>
   );

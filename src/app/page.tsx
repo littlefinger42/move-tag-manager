@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 
 import { TagsList } from "@/app/_components/molecules/TagsList";
-import { Typography } from "@/app/_components/atoms/Typography";
 import { AddTagForm } from "@/app/_components/molecules/AddTagForm";
 
 export const metadata: Metadata = {
@@ -12,7 +11,7 @@ export const metadata: Metadata = {
 export default function Home() {
   return (
     <main>
-      <Typography>Move Tag Manager</Typography>
+      <h1>Move Tag Manager</h1>
       <TagsList />
       <AddTagForm />
     </main>

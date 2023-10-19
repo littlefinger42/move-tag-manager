@@ -11,7 +11,7 @@ import React, {
 import { v4 as uuidv4 } from "uuid";
 
 import { Tag } from "@/app/_types/tag";
-import { getTags, deleteTag as deleteTagApi } from "@/app/_lib/api";
+import { getTags, syncTags as syncTagsApi } from "@/app/_lib/api";
 
 type TagsContextType = {
   tags: Tag[];
@@ -58,14 +58,23 @@ export const TagContextProvider: FC<PropsWithChildren> = ({ children }) => {
 
   const deleteTag = async (id: string) => {
     try {
-      await deleteTagApi(id);
+      // await deleteTagApi(id);
       setTags((oldTags) => oldTags.filter((tag) => tag.id !== id));
     } catch (e) {
       console.error(e);
     }
   };
 
-  const syncTags = () => {};
+  const syncTags = async () => {
+    try {
+      await syncTagsApi(tags);
+      setTags((oldTags) =>
+        oldTags.map((oldTag) => ({ ...oldTag, synced: true }))
+      );
+    } catch (e) {
+      console.error(e);
+    }
+  };
 
   return (
     <tagContext.Provider

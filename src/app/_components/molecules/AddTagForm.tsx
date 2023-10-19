@@ -1,16 +1,17 @@
 "use client";
 
-import { FC, useState } from "react";
+import { FC, FormEvent, useState } from "react";
 import styled from "styled-components";
 
 import { Button } from "@/app/_components/atoms/Button";
+import { TextInput } from "@/app/_components/atoms/TextInput";
 import { useTagContext } from "@/app/_context/tagsContext";
 
 const PositionedButton = styled(Button)`
   margin-right: 1rem;
 `;
 
-const FieldSet = styled.div`
+const Form = styled.form`
   margin-bottom: 1rem;
 `;
 
@@ -29,18 +30,21 @@ export const AddTagForm: FC = () => {
     }
   };
 
+  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    addTag(tagInput);
+  };
+
   return (
     <>
-      <FieldSet>
-        <PositionedButton onClick={() => addTag(tagInput)}>
-          Add tag
-        </PositionedButton>
-        <input
-          type="text"
+      <Form onSubmit={handleSubmit}>
+        <PositionedButton type="submit">Add tag</PositionedButton>
+        <TextInput
           onChange={(e) => setTagInput(e.target.value)}
           value={tagInput}
+          required
         />
-      </FieldSet>
+      </Form>
 
       <PositionedButton onClick={handleSyncTags}>Sync Tags</PositionedButton>
       {statusMessage}

@@ -19,11 +19,17 @@ const StyledButton = styled.button`
 interface ButtonProps extends PropsWithChildren {
   className?: string;
   onClick?: () => void;
+  type?: "button" | "reset" | "submit" | undefined;
 }
 
-export const Button: FC<ButtonProps> = ({ className, children, onClick }) => {
+export const Button: FC<ButtonProps> = ({
+  className,
+  children,
+  onClick,
+  type,
+}) => {
   return (
-    <StyledButton onClick={onClick} className={className}>
+    <StyledButton onClick={onClick} className={className} type={type}>
       {children}
     </StyledButton>
   );

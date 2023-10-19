@@ -18,13 +18,15 @@ const UnorderedList = styled.ul`
 `;
 
 export const TagsList: FC = () => {
-  const { tags } = useTagContext();
+  const { tags, deleteTag } = useTagContext();
 
   return (
     <UnorderedList>
       {tags.map(({ id, title, synced }) => (
         <li key={id}>
-          <Tag synced={!!synced}>{title}</Tag>
+          <Tag synced={!!synced} onClick={() => deleteTag(id)}>
+            {title}
+          </Tag>
         </li>
       ))}
     </UnorderedList>

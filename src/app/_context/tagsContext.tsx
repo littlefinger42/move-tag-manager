@@ -11,15 +11,20 @@ import React, {
 import { v4 as uuidv4 } from "uuid";
 
 import { Tag } from "@/app/_types/tag";
+import { getTags, deleteTag as deleteTagApi } from "@/app/_lib/api";
 
 type TagsContextType = {
   tags: Tag[];
   addTag: (title: string) => void;
+  syncTags: () => void;
+  deleteTag: (id: string) => void;
 };
 
 const tagContext = createContext<TagsContextType>({
   tags: [],
   addTag: () => {},
+  syncTags: () => {},
+  deleteTag: () => {},
 });
 
 const generateTag = (title: string) => ({
@@ -35,24 +40,10 @@ export const TagContextProvider: FC<PropsWithChildren> = ({ children }) => {
 
   useEffect(() => {
     async function fetchData() {
-      try {
-        const response = await fetch(
-          `${process.env.NEXT_PUBLIC_API_URL}/tags`,
-          {
-            method: "GET",
-            headers: { "content-type": "application/json" },
-          }
-        );
-        if (response.ok) {
-          const tags = await response.json();
-          setTags(tags.map((tag: Tag) => ({ ...tag, synced: true })));
-        } else {
-          throw Error(`An error has occured: ${response.status}`);
-        }
-      } catch (e) {
-        console.error(e);
-      }
+      const remoteTags = await getTags();
+      setTags(remoteTags);
     }
+
     fetchData();
   }, []);
 
@@ -65,11 +56,24 @@ export const TagContextProvider: FC<PropsWithChildren> = ({ children }) => {
     }
   };
 
+  const deleteTag = async (id: string) => {
+    try {
+      await deleteTagApi(id);
+      setTags((oldTags) => oldTags.filter((tag) => tag.id !== id));
+    } catch (e) {
+      console.error(e);
+    }
+  };
+
+  const syncTags = () => {};
+
   return (
     <tagContext.Provider
       value={{
         tags,
         addTag,
+        syncTags,
+        deleteTag,
       }}
     >
       {children}
